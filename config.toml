@@ -1,0 +1,25 @@
+# Copy next to app.py as .streamlit/config.toml
+[server]
+enableXsrfProtection = true
+maxUploadSize = 25          # MB, matches the per-file limit for memo files
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "viewer"      # hides developer-only menu items from end users
+
+# Colors that match the app's look (the page color and the finer details are set by STYLE_CSS in app.py).
+[theme]
+base = "light"
+primaryColor = "#0F304F"              # navy: checkboxes, selected days, focus
+backgroundColor = "#FFFFFF"           # cards, table cells
+secondaryBackgroundColor = "#F3F6FA"  # table header, field backgrounds
+textColor = "#10243E"
+text-align = "right"
+
+
+[theme.sidebar]                       # needs a Streamlit release with sidebar theming; older ones just warn
+backgroundColor = "#0F304F"
+secondaryBackgroundColor = "#16406A"
+textColor = "#FFFFFF"

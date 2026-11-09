@@ -1,0 +1,7 @@
+streamlit>=1.40   # "remember me" needs a release whose st.html accepts unsafe_allow_javascript (the app hides the option otherwise)
+pandas>=2.0
+openpyxl>=3.1
+# optional: encryption at rest (MEMO_ENC_KEY)
+cryptography>=42
+# optional: load the reference list from a database (plus your database driver, e.g. psycopg)
+# sqlalchemy>=2.0
