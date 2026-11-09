@@ -48,11 +48,16 @@ input, textarea { unicode-bidi: plaintext; }
     transform: translateX(100%) !important; 
 }
 
-/* Push the main container content block to clear spacing room for the 21rem (approx 336px) right sidebar */
+/* Fix for Deployed Layout: Push the main page block content to clear space for the sidebar */
 @media (min-width: 768px) {
     [data-testid="stAppViewContainer"] {
-        display: flex;
+        display: flex !important;
         flex-direction: row-reverse !important;
+    }
+    section.main {
+        margin-right: 21rem !important; /* Matches the exact width of the sidebar */
+        margin-left: 0 !important;
+        width: calc(100% - 21rem) !important;
     }
     .main .block-container, [data-testid="stMainBlockContainer"] {
         margin-right: 0 !important;
