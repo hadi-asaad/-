@@ -26,22 +26,55 @@ st.set_page_config(page_title="مذكرات تصنيف البضائع", page_ico
 
 # Right-to-left layout. Codes, memo numbers and file names stay left-to-right inside Arabic sentences,
 # inputs follow the direction of what is typed, and the data grid keeps its own (left-to-right) layout.
+# Right-to-left layout. Codes, memo numbers and file names stay left-to-right inside Arabic sentences,
+# inputs follow the direction of what is typed, and the data grid keeps its own (left-to-right) layout.
 RTL_CSS = """<style>
-html, body, .stApp { direction: rtl; }
+/* Target the app viewport block containers directly to enforce RTL without breaking cloud framing markup */
+[data-testid="stAppViewBlockContainer"], [data-testid="stMainBlockContainer"], [data-testid="stHeader"] { 
+    direction: rtl; 
+}
 code, .stApp code { direction: ltr; unicode-bidi: isolate; }
 input, textarea { unicode-bidi: plaintext; }
 [data-testid="stDataFrame"] { direction: ltr; }
-/* The sidebar sits on the right: hide it toward the right edge (Streamlit's own animation slides it to the left). */
-[data-testid="stSidebar"][aria-expanded="false"] { transform: translateX(100vw) !important; }
-@media (max-width: 768px) { [data-testid="stSidebar"] { left: auto !important; right: 0 !important; } }
-/* Mirror the sidebar's open/close arrows so they point the right way. */
+
+/* Physically pin the primary sidebar container over to the right frame border */
+[data-testid="stSidebar"] {
+    left: auto !important;
+    right: 0 !important;
+}
+
+/* Enforce the expanding slider animation state to clip outwards cleanly toward the right edge */
+[data-testid="stSidebar"][aria-expanded="false"] { 
+    transform: translateX(100%) !important; 
+}
+
+/* Push the main container content block to clear spacing room for the 21rem (approx 336px) right sidebar */
+@media (min-width: 768px) {
+    [data-testid="stAppViewContainer"] {
+        display: flex;
+        flex-direction: row-reverse !important;
+    }
+    .main .block-container, [data-testid="stMainBlockContainer"] {
+        margin-right: 0 !important;
+        margin-left: auto !important;
+    }
+}
+
+/* Mirror the toggle button icons so the directional chevrons point accurately */
 [data-testid="stSidebarCollapseButton"] button, button[data-testid="stSidebarCollapseButton"],
 [data-testid="stExpandSidebarButton"] button, button[data-testid="stExpandSidebarButton"],
 [data-testid="stSidebarCollapsedControl"] button, [data-testid="collapsedControl"] button,
-button[aria-label="Close sidebar"], button[aria-label="Open sidebar"] { transform: scaleX(-1); }
-/* The "open sidebar" control belongs on the right, next to the sidebar. */
-[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"] { left: auto !important; right: 0.5rem !important; }
+button[aria-label="Close sidebar"], button[aria-label="Open sidebar"] { 
+    transform: scaleX(-1); 
+}
+
+/* Align the closed sidebar overlay floating anchor button directly to the right sidebar edge */
+[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"] { 
+    left: auto !important; 
+    right: 0.5rem !important; 
+}
 </style>"""
+
 
 # The look (palette, cards, sidebar menu, buttons, fields) comes from the reference photos.
 # Change a color once in the :root variables; .streamlit/config.toml carries the matching Streamlit theme.
